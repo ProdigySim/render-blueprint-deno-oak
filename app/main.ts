@@ -2,7 +2,7 @@ import { Application } from "./deps.ts";
 import router from "./routes.ts";
 
 const env = Deno.env.toObject();
-const PORT = env.PORT || 3000;
+const PORT = env.OAK_PORT || 3000;
 const HOST = env.HOST || "localhost";
 
 const app = new Application();
