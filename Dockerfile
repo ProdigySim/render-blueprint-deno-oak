@@ -1,9 +1,6 @@
 FROM denoland/deno:1.16.2
 
-EXPOSE 80
-
 WORKDIR /app
-
 
 # Prefer not to run as root.
 USER deno
@@ -17,7 +14,5 @@ RUN deno cache deps.ts
 ADD app/. .
 # Compile the main app so that it doesn't need to be compiled each startup/entry.
 RUN deno cache main.ts
-
-ENV PORT=80
 
 CMD ["run", "--allow-net", "--allow-env", "main.ts"]
