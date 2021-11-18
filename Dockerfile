@@ -1,5 +1,21 @@
-# You can change this to a newer version of MySQL available at
-# https://hub.docker.com/r/mysql/mysql-server/tags/
-FROM mysql/mysql-server:8.0.24
+FROM denoland/deno:1.16.2
 
-COPY config/user.cnf /etc/mysql/my.cnf
+EXPOSE 80
+
+WORKDIR /app
+
+
+# Prefer not to run as root.
+USER deno
+
+# Cache the dependencies as a layer (the following two steps are re-run only when deps.ts is modified).
+# Ideally cache deps.ts will download and compile _all_ external files used in main.ts.
+COPY deps.ts .
+RUN deno cache deps.ts
+
+# These steps will be re-run upon each file change in your working directory:
+ADD . .
+# Compile the main app so that it doesn't need to be compiled each startup/entry.
+RUN deno cache main.ts
+
+CMD ["run", "--allow-net", "main.ts"]
