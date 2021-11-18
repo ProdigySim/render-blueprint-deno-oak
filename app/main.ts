@@ -1,10 +1,6 @@
 import { Application } from "./deps.ts";
 import router from "./routes.ts";
 
-const env = Deno.env.toObject();
-const PORT = env.OAK_PORT || 3000;
-const HOST = env.HOST || "localhost";
-
 const app = new Application();
 app.use(async (ctx, next) => {
   try {
@@ -21,6 +17,6 @@ app.use((ctx) => {
   ctx.response.body = { msg: "Not Found !!" };
 });
 
-console.log(`Server running on port ${PORT}`);
+console.log(`Server running on port 80`);
 
-app.listen(`${HOST}:${PORT}`);
+app.listen(`localhost:80`);
