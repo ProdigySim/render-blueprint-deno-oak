@@ -15,4 +15,6 @@ ADD app/. .
 # Compile the main app so that it doesn't need to be compiled each startup/entry.
 RUN deno cache main.ts
 
+ENV HOST=0.0.0.0
+
 CMD ["run", "--allow-net", "--allow-env", "main.ts"]
